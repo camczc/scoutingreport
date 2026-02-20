@@ -108,15 +108,15 @@ scoutingreport/
 
 ---
 
-### Career Stats
-![Career Stats](assets/demo/2.png)
-![Career Stats Continued](assets/demo/2_1.png)
+### Career Stats (Batter)
+![Career Stats (Batter)](assets/demo/2.png)
+![Career Stats (Batter) Continued](assets/demo/2_1.png)
 
 ---
 
-### AI Scouting Report
-![Scouting Report](assets/demo/3.png)
-![Scouting Report Continued](assets/demo/3_1.png)
+### Career Stats (Pitcher)
+![Career Stats (Pitcher)](assets/demo/3.png)
+![Career Stats (Pitcher) Continued](assets/demo/3_1.png)
 
 ---
 
