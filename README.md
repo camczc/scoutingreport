@@ -16,47 +16,6 @@ ScoutingReport pulls live MLB data, generates Claude-powered scouting reports an
 
 ---
 
-## Screenshots
-
-### Player Search
-![Player Search](assets/demo/1.png)
-
----
-
-### Career Stats
-![Career Stats](assets/demo/2.png)
-![Career Stats Continued](assets/demo/2_1.png)
-
----
-
-### AI Scouting Report
-![Scouting Report](assets/demo/3.png)
-![Scouting Report Continued](assets/demo/3_1.png)
-
----
-
-### Matchup Analyzer
-![Matchup](assets/demo/4.png)
-![Matchup Analysis](assets/demo/4_1.png)
-![Matchup Analysis Continued](assets/demo/4_2.png)
-
----
-
-### Today's Games — Pitcher Heatmaps
-![Today's Games](assets/demo/5.png)
-![Pitcher Heatmap](assets/demo/5_1.png)
-![Pitch Arsenal](assets/demo/5_2.png)
-![Head to Head Stats](assets/demo/5_3.png)
-
----
-
-### AI Game Preview
-![AI Game Preview](assets/demo/6.png)
-![AI Game Preview Continued](assets/demo/6_2.png)
-![AI Game Preview Full](assets/demo/6_3.png)
-
----
-
 ## Tech Stack
 
 | Layer | Technology |
@@ -142,6 +101,43 @@ scoutingreport/
 
 ---
 
-## Built by Cameron Cooper
+## Screenshots
 
-[camcooper.com](https://camcooper.com) · [GitHub](https://github.com/cameroncooper)
+### Player Search
+![Player Search](assets/demo/1.png)
+
+---
+
+### Career Stats
+![Career Stats](assets/demo/2.png)
+![Career Stats Continued](assets/demo/2_1.png)
+
+---
+
+### AI Scouting Report
+![Scouting Report](assets/demo/3.png)
+![Scouting Report Continued](assets/demo/3_1.png)
+
+---
+
+### Matchup Analyzer
+![Matchup](assets/demo/4.png)
+![Matchup Analysis](assets/demo/4_1.png)
+![Matchup Analysis Continued](assets/demo/4_2.png)
+
+---
+
+### Today's Games — Pitcher Heatmaps
+![Today's Games](assets/demo/5.png)
+![Pitcher Heatmap](assets/demo/5_1.png)
+![Pitch Arsenal](assets/demo/5_2.png)
+![Head to Head Stats](assets/demo/5_3.png)
+
+---
+
+### AI Game Preview
+![AI Game Preview](assets/demo/6.png)
+![AI Game Preview Continued](assets/demo/6_2.png)
+![AI Game Preview Full](assets/demo/6_3.png)
+
+---
