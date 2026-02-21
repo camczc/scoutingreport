@@ -137,7 +137,7 @@ scoutingreport/
 
 ### AI-Powered Game Preview
 ![AI-Powered Game Preview](assets/demo/6.png)
-![AI-Powered Game Preview Continued](assets/demo/6_2.png)
-![AI Game Preview Full Continued Continued](assets/demo/6_3.png)
-![AI Game Preview Full Continued Continued Continued](assets/demo/6_4.png)
+![AI-Powered Game Preview Continued](assets/demo/6_1.png)
+![AI-Powered Game Preview Continued Continued](assets/demo/6_2.png)
+![AI Game Preview Full Continued Continued Continued](assets/demo/6_3.png)
 ---
