@@ -40,18 +40,23 @@ def get_pitcher_vs_team(pitcher_id: int, team_id: int):
 
 def draw_strike_zone():
     shapes = [
+        # Outer strike zone — brighter, thicker
         dict(type="rect", x0=-0.83, x1=0.83, y0=1.5, y1=3.5,
-             line=dict(color="#666", width=2), fillcolor="rgba(0,0,0,0)")
+             line=dict(color="#aaa", width=2), fillcolor="rgba(0,0,0,0)"),
+        # Home plate outline
+        dict(type="rect", x0=-0.71, x1=0.71, y0=0.0, y1=0.3,
+             line=dict(color="#555", width=1), fillcolor="rgba(255,255,255,0.03)"),
     ]
+    # Inner grid lines
     shapes += [
         dict(type="line", x0=-0.83/3, x1=-0.83/3, y0=1.5, y1=3.5,
-             line=dict(color="#333", width=1, dash="dot")),
+             line=dict(color="#555", width=1, dash="dot")),
         dict(type="line", x0=0.83/3, x1=0.83/3, y0=1.5, y1=3.5,
-             line=dict(color="#333", width=1, dash="dot")),
+             line=dict(color="#555", width=1, dash="dot")),
         dict(type="line", x0=-0.83, x1=0.83, y0=1.5+(2/3), y1=1.5+(2/3),
-             line=dict(color="#333", width=1, dash="dot")),
+             line=dict(color="#555", width=1, dash="dot")),
         dict(type="line", x0=-0.83, x1=0.83, y0=1.5+(4/3), y1=1.5+(4/3),
-             line=dict(color="#333", width=1, dash="dot")),
+             line=dict(color="#555", width=1, dash="dot")),
     ]
     return shapes
 
@@ -76,23 +81,31 @@ def render_heatmap(pitch_data: dict, pitch_type_filter: str = "ALL", hand_filter
     df = df.dropna(subset=["plate_x", "plate_z"])
 
     fig = go.Figure()
+
+    # Heatmap contour
     fig.add_trace(go.Histogram2dContour(
         x=df["plate_x"], y=df["plate_z"],
         colorscale=[
-            [0, "rgba(0,0,0,0)"],
-            [0.2, "rgba(192,57,43,0.2)"],
-            [0.5, "rgba(192,57,43,0.6)"],
-            [1.0, "rgba(192,57,43,1.0)"],
+            [0,   "rgba(0,0,0,0)"],
+            [0.15, "rgba(192,57,43,0.15)"],
+            [0.4, "rgba(192,57,43,0.5)"],
+            [0.7, "rgba(192,57,43,0.85)"],
+            [1.0, "rgba(220,80,60,1.0)"],
         ],
-        showscale=False, ncontours=12,
+        showscale=False, ncontours=15,
         contours=dict(showlines=False),
     ))
 
+    # Scatter dots — larger, more visible
     colors_by_type = {
-        "Four-Seam Fastball": "#e8e0d0", "Sinker": "#aaa",
-        "Slider": "#c0392b", "Curveball": "#3498db",
-        "Changeup": "#2ecc71", "Cutter": "#f39c12",
-        "Sweeper": "#9b59b6", "Splitter": "#1abc9c",
+        "Four-Seam Fastball": "#e8e0d0",
+        "Sinker": "#b0b0b0",
+        "Slider": "#e74c3c",
+        "Curveball": "#3498db",
+        "Changeup": "#2ecc71",
+        "Cutter": "#f39c12",
+        "Sweeper": "#9b59b6",
+        "Splitter": "#1abc9c",
     }
     if "pitch_name" in df.columns:
         for pname, grp in df.groupby("pitch_name"):
@@ -100,23 +113,34 @@ def render_heatmap(pitch_data: dict, pitch_type_filter: str = "ALL", hand_filter
             fig.add_trace(go.Scatter(
                 x=grp["plate_x"], y=grp["plate_z"],
                 mode="markers",
-                marker=dict(size=3, color=color, opacity=0.35),
+                marker=dict(size=5, color=color, opacity=0.6,
+                            line=dict(width=0.5, color="rgba(0,0,0,0.3)")),
                 name=pname,
                 hovertemplate=f"<b>{pname}</b><br>X: %{{x:.2f}}<br>Z: %{{y:.2f}}<extra></extra>"
             ))
 
     fig.update_layout(
         shapes=draw_strike_zone(),
-        xaxis=dict(range=[-2.5, 2.5], zeroline=False, showgrid=False,
-                   tickfont=dict(family="IBM Plex Mono", size=10, color="#555"),
-                   title=dict(text="← ARM SIDE    GLOVE SIDE →", font=dict(family="IBM Plex Mono", size=9, color="#555"))),
-        yaxis=dict(range=[0.5, 5], zeroline=False, showgrid=False,
-                   tickfont=dict(family="IBM Plex Mono", size=10, color="#555")),
+        xaxis=dict(
+            range=[-2.5, 2.5], zeroline=False, showgrid=False,
+            tickfont=dict(family="IBM Plex Mono", size=10, color="#555"),
+            title=dict(text="← ARM SIDE    GLOVE SIDE →",
+                       font=dict(family="IBM Plex Mono", size=9, color="#555"))
+        ),
+        yaxis=dict(
+            range=[0.0, 5.5], zeroline=False, showgrid=False,
+            tickfont=dict(family="IBM Plex Mono", size=10, color="#555")
+        ),
         paper_bgcolor="#0a0a0a", plot_bgcolor="#0a0a0a",
-        margin=dict(l=20, r=20, t=10, b=30), height=380,
+        margin=dict(l=20, r=120, t=20, b=40), height=480,
         showlegend=True,
-        legend=dict(font=dict(family="IBM Plex Mono", size=9, color="#888"),
-                    bgcolor="rgba(0,0,0,0)", x=1.02, y=1),
+        legend=dict(
+            font=dict(family="IBM Plex Mono", size=10, color="#aaa"),
+            bgcolor="rgba(15,15,15,0.8)",
+            bordercolor="#333",
+            borderwidth=1,
+            x=1.02, y=1
+        ),
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -138,7 +162,6 @@ def render():
         """, unsafe_allow_html=True)
         return
 
-    # Game selector
     st.markdown('<div class="section-header">Select a Game</div>', unsafe_allow_html=True)
 
     game_labels = []
@@ -170,7 +193,6 @@ def render():
     game_type = selected_game.get("game_type", "")
     type_label = "SPRING TRAINING" if game_type == "S" else "REGULAR SEASON" if game_type == "R" else game_type
 
-    # Game card with team logos
     away_logo = TEAM_LOGO_URL.format(team_id=away_id)
     home_logo = TEAM_LOGO_URL.format(team_id=home_id)
 
@@ -189,7 +211,6 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    # AI Game Preview button
     preview_key = f"preview_{selected_game.get('game_id')}"
     if st.button("⚡ AI Game Preview", key=f"btn_{preview_key}"):
         away_pitcher = selected_game.get("away_probable_pitcher", "TBD")
@@ -198,7 +219,6 @@ def render():
         home_pitcher_id = selected_game.get("home_pitcher_id")
 
         with st.spinner("Generating game preview..."):
-            # Get stats for both pitchers
             def get_pitcher_stats(pid):
                 if not pid:
                     return {}
@@ -252,7 +272,6 @@ Be specific, use the actual stats, and write like a beat reporter."""
         st.markdown('<div class="section-header">AI Game Preview</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="report-body">{st.session_state[preview_key]}</div>', unsafe_allow_html=True)
 
-    # Pitcher tabs
     away_pitcher = selected_game.get("away_probable_pitcher", "")
     home_pitcher = selected_game.get("home_probable_pitcher", "")
     away_pitcher_id = selected_game.get("away_pitcher_id")
@@ -312,10 +331,10 @@ Be specific, use the actual stats, and write like a beat reporter."""
                         with col:
                             st.markdown(f'<div class="stat-card"><div class="stat-label">{label} {season_yr}</div><div class="stat-value">{val}</div></div>', unsafe_allow_html=True)
 
-            # Heatmap - auto load
+            # Heatmap — all 3 filters on one row
             st.markdown('<div class="section-header">Pitch Location Heatmap</div>', unsafe_allow_html=True)
 
-            hm_col1, hm_col2 = st.columns([2, 2])
+            hm_col1, hm_col2, hm_col3 = st.columns([2, 2, 2])
             with hm_col1:
                 season_sel = st.selectbox("Season", [2025, 2024, 2023, 2022], key=f"hm_season_{pitcher_id}")
             with hm_col2:
@@ -323,21 +342,21 @@ Be specific, use the actual stats, and write like a beat reporter."""
 
             hm_cache_key = f"heatmap_{pitcher_id}_{season_sel}"
             if hm_cache_key not in st.session_state:
-                with st.spinner("Fetching pitch data..."):
+                with st.spinner("Loading pitch data..."):
                     st.session_state[hm_cache_key] = get_pitcher_heatmap(pitcher_id, season_sel)
 
             heatmap_data = st.session_state.get(hm_cache_key, {})
 
             if heatmap_data.get("pitches"):
                 pitch_types = ["ALL"] + sorted(set(p.get("pitch_name","") for p in heatmap_data["pitches"] if p.get("pitch_name")))
-                pitch_filter = st.selectbox("Pitch Type", pitch_types, key=f"pt_{pitcher_id}")
+                with hm_col3:
+                    pitch_filter = st.selectbox("Pitch Type", pitch_types, key=f"pt_{pitcher_id}")
 
                 total = heatmap_data.get("total_pitches", len(heatmap_data["pitches"]))
                 hand_label = f" · VS {hand_filter} BATTERS" if hand_filter != "ALL" else ""
                 st.markdown(f'<div style="font-family:IBM Plex Mono,monospace;font-size:0.6rem;color:#555;letter-spacing:0.2em;margin-bottom:0.5rem;">{total} PITCHES · {season_sel} SEASON · CATCHER\'S PERSPECTIVE{hand_label}</div>', unsafe_allow_html=True)
                 render_heatmap(heatmap_data, pitch_filter, hand_filter)
 
-                # Pitch arsenal
                 df_pitches = pd.DataFrame(heatmap_data["pitches"])
                 if "pitch_name" in df_pitches.columns:
                     st.markdown('<div class="section-header">Pitch Arsenal</div>', unsafe_allow_html=True)
@@ -350,7 +369,6 @@ Be specific, use the actual stats, and write like a beat reporter."""
             else:
                 st.markdown('<div style="color:#444;font-family:IBM Plex Mono,monospace;font-size:0.65rem;letter-spacing:0.15em;padding:1rem 0;">NO PITCH DATA AVAILABLE FOR THIS SEASON</div>', unsafe_allow_html=True)
 
-            # Pitcher vs opponent
             opp_logo = TEAM_LOGO_URL.format(team_id=pitcher["opponent_id"])
             st.markdown(f"""
             <div class="section-header" style="display:flex;align-items:center;gap:0.5rem;">

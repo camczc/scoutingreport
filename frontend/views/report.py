@@ -10,7 +10,7 @@ def render():
     player_id = st.session_state.get("selected_player_id")
     player_name = st.session_state.get("selected_player_name", "Select a player first")
 
-    st.markdown('<div class="logo-header">Scouting Report</div>', unsafe_allow_html=True)
+    # st.markdown('<div class="logo-header">Scouting Report</div>', unsafe_allow_html=True)
 
     if not player_id:
         st.markdown('<div class="logo-sub">AI-Powered MLB Player Analysis</div>', unsafe_allow_html=True)
@@ -18,30 +18,30 @@ def render():
         return
 
     # Player header with headshot
+    st.markdown('<div class="logo-header">Scouting Report</div>', unsafe_allow_html=True)
     try:
         p = requests.get(f"{API_BASE}/players/{player_id}", timeout=10).json()
-        pos = p.get("position", "")
         headshot_url = HEADSHOT_URL.format(mlb_id=player_id)
-        col_photo, col_info = st.columns([1, 5])
-        with col_photo:
-            st.markdown(f"""
+        st.markdown(f"""
+        <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;">
             <img src="{headshot_url}" style="width:120px;border-bottom:3px solid #c0392b;"
                 onerror="this.style.display='none'">
-            """, unsafe_allow_html=True)
-        with col_info:
-            st.markdown(f'<div class="logo-header" style="font-size:3rem;">{player_name}</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="logo-sub">{p.get("team","")}</div>', unsafe_allow_html=True)
+            <div>
+                <div class="player-name">{player_name}</div>
+                <div class="player-meta">{p.get("team","")}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     except:
         st.markdown(f'<div class="logo-sub">{player_name}</div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([2, 2, 3])
     with col1:
-        season = st.selectbox("Season", list(range(2025, 2014, -1)), index=0)
+        season = st.selectbox("Season", list(range(2025, 2014, -1)), index=0, label_visibility="collapsed")
     with col2:
-        st.markdown("<br>", unsafe_allow_html=True)
         generate = st.button("Generate Report", use_container_width=True)
     with col3:
-        question = st.text_input("", placeholder="Optional: Ask a specific question...", label_visibility="collapsed")
+        question = st.text_input("Question", placeholder="Optional: Ask a specific question...", label_visibility="collapsed")
 
     if generate:
         with st.spinner(f"Scouting {player_name}..."):

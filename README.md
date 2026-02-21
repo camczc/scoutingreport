@@ -120,24 +120,24 @@ scoutingreport/
 
 ---
 
-### Matchup Analyzer
-![Matchup](assets/demo/4.png)
-![Matchup Analysis](assets/demo/4_1.png)
-![Matchup Analysis Continued](assets/demo/4_2.png)
+### AI-Powered Scouting Report
+![AI-Powered Scouting Report](assets/demo/4.png)
+![AI-Powered Scouting Report Continued](assets/demo/4_1.png)
+![AI-Powered Scouting Report Continued Continued](assets/demo/4_2.png)
 
 ---
 
-### Today's Games — Pitcher Heatmaps
-![Today's Games](assets/demo/5.png)
-![Pitcher Heatmap](assets/demo/5_1.png)
-![Pitch Arsenal](assets/demo/5_2.png)
-![Head to Head Stats](assets/demo/5_3.png)
+### AI-Powered Matchup Analysis
+![AI-Powered Matchup Analysis](assets/demo/5.png)
+![AI-Powered Matchup Analysis Continued](assets/demo/5_1.png)
+![AI-Powered Matchup Analysis Continued Continued](assets/demo/5_2.png)
+![AI-Powered Matchup Analysis Continued Continued Continued](assets/demo/5_3.png)
 
 ---
 
-### AI Game Preview
-![AI Game Preview](assets/demo/6.png)
-![AI Game Preview Continued](assets/demo/6_2.png)
-![AI Game Preview Full](assets/demo/6_3.png)
-
+### AI-Powered Game Preview
+![AI-Powered Game Preview](assets/demo/6.png)
+![AI-Powered Game Preview Continued](assets/demo/6_2.png)
+![AI Game Preview Full Continued Continued](assets/demo/6_3.png)
+![AI Game Preview Full Continued Continued Continued](assets/demo/6_4.png)
 ---
